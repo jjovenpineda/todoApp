@@ -31,7 +31,7 @@ export default function AddTask() {
   const formattedDate = selectedDate?.toISOString();
 
   const newTaskSubmitButton: FormEventHandler<HTMLFormElement> = async (e) => {
-    if (isInputValid) {
+    if (isInputValid && selectedDate) {
       try {
         setLoading(true);
         e.preventDefault();
@@ -50,7 +50,7 @@ export default function AddTask() {
         setLoading(false);
       }
     } else {
-      toast.error("Input must be at least 3 characters");
+      toast.error("Must have Text/ Date");
     }
   };
 
