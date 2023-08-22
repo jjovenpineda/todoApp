@@ -132,12 +132,12 @@ const Tasks: React.FC<TasksProps> = ({ tasks }) => {
                   </div>
                 ) : (
                   <div className="flex justify-between w-full ">
-                    <del className="opacity-50 ml-2 text-sm">{tasks.text}</del>
+                    <del className="opacity-50 ml-2 text-lg">{tasks.text}</del>
                     <div>
                       <AiOutlineDelete
-                        className="text-red-400"
+                        className="text-red-400 mt-1.5"
                         cursor="pointer"
-                        size={18}
+                        size={20}
                         disabled={loading}
                         onClick={() => handleDelete(tasks.id)}
                       />
@@ -153,7 +153,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks }) => {
                 className=" flex w-full justify-between gap-1 ">
                 <div className="flex-grow">
                   <Input
-                    className="h-[35px]"
+                    className="h-[40px]"
                     placeholder={taskToEdit}
                     value={taskToEdit}
                     onChange={(e) => setTaskToEdit(e.target.value)}
@@ -165,7 +165,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks }) => {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-[130px] justify-start text-left  h-[35px]",
+                          "w-[130px] justify-start text-left  h-[40px]",
                           !currentDate && "text-muted-foreground"
                         )}>
                         <CalendarIcon className="mr-2 h-4 w-4" />
