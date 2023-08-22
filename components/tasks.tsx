@@ -35,14 +35,14 @@ const Tasks: React.FC<TasksProps> = ({ tasks }) => {
   const [onTicked, setOnTicked] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [currentDate, setCurrentDate] = React.useState<Date | undefined>(
-    tasks.date ? new Date(tasks.date) : undefined
+    tasks.date ? new Date(tasks.date as string) : undefined
   );
 
 
 
   const dateString = tasks.date; // Your date string
 
-  const date = parseISO(tasks.date);
+  const date = parseISO(tasks.date as string );
   const formattedDate = format(date, "EEE, MMM d ");
   const formattedSelectedDate = currentDate?.toISOString();
 

@@ -1,7 +1,7 @@
 export interface ITask {
   id: string;
   text: string;
-  date?: String | null;
+  date?: String;
 }
 
 export const getAllTodos = async (): Promise<ITask[]> => {
