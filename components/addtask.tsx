@@ -4,7 +4,7 @@ import { addTodo } from "@/api";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { v4 as uuidv4 } from "uuid";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -23,48 +23,35 @@ export default function AddTask() {
   const [isDateSelected, setIsDateSelected] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  
+
   const [newTaskValue, setNewTaskValue] = useState("");
   const isInputValid = newTaskValue.length >= 1;
-
 
   const router = useRouter();
   const formattedDate = selectedDate?.toISOString();
 
-
-
-
   const newTaskSubmitButton: FormEventHandler<HTMLFormElement> = async (e) => {
-
     if (isInputValid) {
-  try {
-    toast.success('Tasks added!');
-    setLoading(true);
-    await addTodo({
-      id: uuidv4(),
-      text: newTaskValue,
-      date: formattedDate,
-    });
-    setSelectedDate(undefined);
-    setNewTaskValue("");
-   
-    router.refresh();
-   
-  } catch (error) {
-    console.log("Error adding todo:", error);
-  } finally {
-    setLoading(false);
-  }
-} else {
-  toast.error('Input must be at least 3 characters');
-  
-}
-    
-   
-  
-
-
-
+      try {
+        setLoading(true);
+        e.preventDefault();
+        await addTodo({
+          id: uuidv4(),
+          text: newTaskValue,
+          date: formattedDate,
+        });
+        setSelectedDate(undefined);
+        setNewTaskValue("");
+        toast.success("Tasks added!");
+        router.refresh();
+      } catch (error) {
+        console.log("Error adding todo:", error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast.error("Input must be at least 3 characters");
+    }
   };
 
   return (
@@ -112,7 +99,10 @@ export default function AddTask() {
           </PopoverContent>
         </Popover>
 
-        <Button disabled={loading || !isDateSelected } type="submit" className="flex-grow">
+        <Button
+          disabled={loading || !isDateSelected}
+          type="submit"
+          className="flex-grow">
           Add
         </Button>
       </form>
