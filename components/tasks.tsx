@@ -2,7 +2,7 @@
 
 import React, { FormEventHandler, useState } from "react";
 
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { ITask, deleteTodo, editTodo } from "@/api";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
@@ -38,46 +38,48 @@ const Tasks: React.FC<TasksProps> = ({ tasks }) => {
     tasks.date ? new Date(tasks.date as string) : undefined
   );
 
-
+  const isInputValid = taskToEdit.length >= 1;
 
   const dateString = tasks.date; // Your date string
 
-  const date = parseISO(tasks.date as string );
+  const date = parseISO(tasks.date as string);
   const formattedDate = format(date, "EEE, MMM d ");
   const formattedSelectedDate = currentDate?.toISOString();
 
   const handleClickEdit: FormEventHandler<HTMLFormElement> = async (e) => {
-   
-   
-    try {
-      toast.success('Successfully updated!');
-      setLoading(true);
-      e.preventDefault();
-      await editTodo({
-        id: tasks.id,
-        text: taskToEdit,
-        date: formattedSelectedDate,
-      });
+    if (isInputValid && currentDate) {
+      try {
+        toast.success("Successfully updated!");
+        setLoading(true);
+        e.preventDefault();
+        await editTodo({
+          id: tasks.id,
+          text: taskToEdit,
+          date: formattedSelectedDate,
+        });
 
-      setTaskToEdit("");
-      setOpenEdit(false);
-      router.refresh();
-    } catch (error) {
-      console.log("error editing");
-    } finally {
-      setLoading(false);
+        setTaskToEdit("");
+        setOpenEdit(false);
+        router.refresh();
+      } catch (error) {
+        console.log("error editing");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast.error("Must have Text/ Date");
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
-      toast.success('Tasks Deleted!');
+      toast.success("Tasks Deleted!");
       setLoading(true);
       await deleteTodo(id);
       setOpenEdit(false);
       router.refresh();
     } catch (error) {
-     toast.error("error deleting");
+      toast.error("error deleting");
     }
   };
 
